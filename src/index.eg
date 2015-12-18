@@ -1,0 +1,67 @@
+
+require:
+   path
+
+reg{@, options} =
+   @register-resources with {
+      "js/disqus.js" => {
+         path = path.join{__dirname, "../client/disqus.js"}
+         contents = true
+         type = .js
+         method = .head
+      }
+      "js/nav.js/install" => {
+         path = null
+         contents = '$$quaintDisqusInstall({JSON.stringify{options}})'
+         type = .js
+         method = .body
+         inline = true
+      }
+   }
+
+install{@, options} =
+
+   if not options.shortname:
+      throw E.quaint-disqus.no-shortname with
+         'Missing the "shortname" option. This is the Disqus identifier for your site.'
+
+   if not options.id-field:
+      throw E.quaint-disqus.no-id-field with
+         'Missing the "idField" option. quaint-disqus uses meta::idField'
+         \ + ' to identify the thread for a given page. I recommend'
+         \ + ' to manually generate a uuid for every page and set'
+         \ + ' "meta :: id = [uuid]", then setting "idField" to "id".'
+         \ + ' You can also set it to "path", but then the comment thread will'
+         \ + ' be lost if you rename the file.'
+
+   idf = options.id-field
+   tif = options.title-field or "title"
+
+   @register-macros with {
+      disqus{engine, body} =
+         if body.raw{}.trim{} !== "":
+            throw E.quaint-disqus.body{"the disqus:: macro does not take arguments"}
+         engine.deferred with {engine, documents} ->
+            id = documents.meta.get-raw{idf}
+            if not id:
+               throw E.quaint-disqus.no-id with
+                  'The id field "{idf}" is not defined in meta.'
+            reg{@} with {
+               shortname = options.shortname
+               url = documents.meta.get-raw{"url"}
+               identifier = id
+               title = documents.meta.get-raw{tif} or null
+            }
+            div % id = "disqus_thread"
+   }
+
+
+
+main{*match} =
+   {@, options = {=}} when @is-quaint-engine ->
+      install{@, options}
+   {options = {=}} ->
+      {@} -> main{@, options}
+
+provide = main
+
