@@ -7,14 +7,18 @@
     "type": "git",
     "url": "https://github.com/breuleux/quaint-disqus"
   },
-  "keywords": [],
+  "keywords": [
+      "quaint",
+      "quaint-plugin",
+      "disqus"
+  ],
   "author": "Olivier Breuleux",
   "license": "MIT",
   "main": "./lib/index.js",
   "dependencies": {
     "chalk": "^1.1.1",
     "earlgrey-runtime": ">=0.0.11",
-    "inquirer-promise": "0.0.0"
+    "inquirer-promise": ">=0.0.3"
   },
   "devDependencies": {
     "earlgrey": ">=0.0.13",
