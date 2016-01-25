@@ -7,12 +7,14 @@ This plugin lets you embed a Disqus comment thread on a page.
 
 ## Install
 
-    npm install quaint-disqus -g
+    quaint --setup disqus
+
+Follow the instructions.
 
 
 ## Sample configuration
 
-This configuration entry must be added in the `plugins` field of
+This configuration entry must be added in the `plugins` section of
 `quaint.json`:
 
 ```json
@@ -55,9 +57,9 @@ The Disqus identifier for your site.
 ### `idField` (**required**)
 
 For any given page, `quaint-disqus` will look for the comment thread
-ID in the `meta ::` declarations and you must provide the name of the
-ID field. For instance, if `idField` is set to `"id"`, then you might
-write something like:
+ID in the `meta` declarations and you must provide the name of the ID
+field. For instance, if `idField` is set to `"id"`, then you may write
+something like:
 
 ```quaint
 meta ::
@@ -67,7 +69,7 @@ disqus ::
 ```
 
 You may also set `idField` to `"path"`, which is a field that Quaint
-fills by default. The only issue with that is that the comment thread
+sets by default. The only issue with that is that the comment thread
 will be lost if you rename the file. I recommend using a dedicated
 `id` field instead, which you might use for other purposes as well.
 
@@ -80,6 +82,6 @@ use the following conditional expression:
 
 ### `titleField` (**optional**, default: "title")
 
-The `meta ::` field to use for the thread's title. By default this is
-the `title` field.
+The `meta` field to use for the thread's title. By default this is the
+`title` field.
 
