@@ -1,0 +1,21 @@
+
+require:
+   inquirer-promise as inq
+
+
+async quaint-setup{config, instructions} =
+   data = config.plugins.disqus or= {=}
+   shortname = await inq.input{"Disqus shortname:"} with
+      {
+         default = data.shortname or ""
+         validate{name} =
+            [name != ""] or "You must enter a shortname"
+      }
+   id-field = await inq.input{"Use id field:"} with
+      {default = data.id-field or "id"}
+   title-field = await inq.input{"Use title field:"} with
+      {default = data.title-field or "title"}
+   data &: {= shortname, = id-field, = title-field}
+
+
+provide = quaint-setup
