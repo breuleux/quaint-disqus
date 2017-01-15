@@ -1,16 +1,16 @@
 {
   "name": "quaint-disqus",
   "description": "Insert Disqus comments in a Quaint document",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "format": "cjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/breuleux/quaint-disqus"
   },
   "keywords": [
-      "quaint",
-      "quaint-plugin",
-      "disqus"
+    "quaint",
+    "quaint-plugin",
+    "disqus"
   ],
   "author": "Olivier Breuleux",
   "license": "MIT",
