@@ -4,13 +4,21 @@ require:
 
 reg{@, options} =
    @register-resources with {
-      "js/disqus.js" => {
+      "disqus/disqus.js" => {
          path = path.join{__dirname, "../client/disqus.js"}
          contents = true
          type = .js
          method = .head
       }
-      "js/nav.js/install" => {
+      "disqus/count.js" => {
+         path = '//{options.shortname}.disqus.com/count.js'
+         path-is-url = true
+         type = .js
+         method = .head
+         async = true
+         id = "dsq-count-scr"
+      }
+      "disqus/disqus.js/install" => {
          path = null
          contents = '$$quaintDisqusInstall({JSON.stringify{options}})'
          type = .js
@@ -38,6 +46,12 @@ install{@, options} =
    tif = options.title-field or "title"
 
    @register-macros with {
+
+      disqusCount{engine, _id >> _id.raw{}.trim{}} =
+         id = _id or engine.documents.meta.get{idf}
+         span.disqus-comment-count %
+            "data-disqus-identifier" = id
+
       disqus{engine, body} =
          if body.raw{}.trim{} !== "":
             throw E.quaint-disqus.body{"the disqus:: macro does not take arguments"}
