@@ -1,7 +1,7 @@
 {
   "name": "quaint-disqus",
   "description": "Insert Disqus comments in a Quaint document",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "format": "cjs",
   "repository": {
     "type": "git",
